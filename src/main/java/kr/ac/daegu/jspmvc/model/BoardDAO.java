@@ -368,4 +368,17 @@ public class BoardDAO {
         }
         throw new SQLException("failed to get orderNumToInsertBoard");
     }
+
+    public void updateOrderNum(int replyRootId, int minOrderNum) throws ClassNotFoundException, SQLException {
+        // Connection, PreparedStatement, ResultSet은 interface 객체이다.
+        Class.forName("org.mariadb.jdbc.Driver");
+        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PW);
+        PreparedStatement pstmt = null;
+
+        pstmt = conn.prepareStatement("UPDATE BOARD SET orderNum = orderNum + 1" +
+                " WHERE replyRootId = ?  AND orderNum >= ?");
+        pstmt.setInt(1, replyRootId);
+        pstmt.setInt(2, minOrderNum);
+        pstmt.executeUpdate();
+    }
 }

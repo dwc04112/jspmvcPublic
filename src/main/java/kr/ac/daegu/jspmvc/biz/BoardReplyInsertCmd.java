@@ -44,22 +44,20 @@ public class BoardReplyInsertCmd implements BoardCmd {
             int minOrderNum = dao.getMinOrderNum(replyRootId, depth, orderNum);
             System.out.println("minOrderNum==" + minOrderNum);
 
-            if(minOrderNum == 0) {
-                orderNum = dao.getReplyOrderNum(replyRootId);
-                depth = depth + 1;
-                subject = appendPrefixString("RE: ", depth, subject);
-                dao.insertReplyContent(newId, subject, author, content, password, replyRootId, depth, orderNum);
-            } else {
-                /*
-                -- 2-2. 1번(minOrderNum)이 0이 아닐 경우(1) : board테이블의 기존 orderNum들을 +1
-                UPDATE BOARD SET orderNum = orderNum + 1
-                WHERE replyRootId =  (원글의 replyRootId)  AND orderNum >= (1번값)
-                -- 2-2. 1번(minOrderNum)이 0이 아닐 경우(2) : board테이블 insert
-                INSERT INTO BOARD VALUES
-                (번호, (원글의 replyRootId), (1번값), (원글의 DEPTH +1) ,' 제목')
-                */
-            }
 
+            // minOrderNum이 0인 경우 : root글에 달린 답글들 사이에 추가되는 답글인지?
+            if(minOrderNum == 0) {
+                System.out.println("===root 글에 달린 답글들 사이에 추가되는 답글이 아님===");
+                orderNum = dao.getReplyOrderNum(replyRootId);
+            } else {
+                System.out.println("===root글에 달린 답글들 사이에 추가되는 답글===");
+                dao.updateOrderNum(replyRootId, minOrderNum);
+                orderNum = minOrderNum;
+            }
+            depth = depth + 1;
+            subject = appendPrefixString("RE: ", depth, subject);
+
+            dao.insertReplyContent(newId, subject, author, content, password, replyRootId, depth, orderNum);
 
             // dao 기능 호출해서 enduser가 입력한 데이터와 replyRootId, depth, orderNum insert
 //            dao.insertReplyContent(newId, subject, author, content, password, replyRootId, depth, orderNum);
