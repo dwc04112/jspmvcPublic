@@ -7,7 +7,7 @@ import java.util.List;
 
 // DatabaseAccessObject : 이 객체가 db에 접속해서 쿼리를 날리고 결과를 리턴해주는 책임
 public class BoardDAO {
-    private static final String DB_URL  = "jdbc:mariadb://localhost:3306/dgd";
+    private static final String DB_URL  = "jdbc:mariadb://localhost:3306/dgd2";
     private static final String DB_USER = "root";
     private static final String DB_PW   = "0000";
 
@@ -31,7 +31,7 @@ public class BoardDAO {
         int startRowNum;
         int endRowNum = pageNum*pagePerRow;
         if(pageNum == 1){
-            startRowNum = pageNum;
+            startRowNum = 0;    //id가 0인 값부터 보여줄수 있게 0908
         } else {
             startRowNum = (pagePerRow*(pageNum-1))+1;
         }

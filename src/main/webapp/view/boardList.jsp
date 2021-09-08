@@ -51,7 +51,7 @@
     </c:forEach>
     <tr>
         <!-- boardInsert.jsp로 이동 되도록 처리 해 보시오. -->
-        <td colspan="7"><a href="/jspmvc/view/boardInsert.jsp">[글 추가하기]</a></td>
+        <td colspan="7"><a href="/jspmvcPublic/view/boardInsert.jsp">[글 추가하기]</a></td>
     </tr>
     <tr>
         <td colspan="7">

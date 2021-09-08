@@ -39,6 +39,7 @@ public class BoardReplyInsertCmd implements BoardCmd {
         try {
             // board 테이블에 들어갈 id값을 가져오기 : board.id중에서 가장 높은 id값 + 1
             newId = dao.getBoardNewId();
+
             /* depth와 orderNum을 정하는 로직 */
             int minOrderNum = dao.getMinOrderNum(replyRootId, depth, orderNum);
             System.out.println("minOrderNum==" + minOrderNum);
