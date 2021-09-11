@@ -7,15 +7,15 @@ import java.util.Date;
 // DataTransferObject : db에서 가져오는 테이블 row 데이터의 묶음.
 // ValueObject        : db에서 가져오는 테이블 row 데이터의 묶음. setter가 없다.
 public class BoardDTO {
-    private int id;                      // 글 id(글번호)
-    private String author;               // 작성자 이름
-    private String subject;              // 글 제목
-    private String content;              // 글 컨텐츠
-    private Date writeDate;              // 작성 날짜
-    private Time writeTime;              // 작성 시간
-    private int readCount;               // 조회수
-    private int commentCount;            // 댓글 갯수
-    private String password;             // 수정 삭제를 위한 패스워드
+    private int id;                      // 글 id(글번호) 1
+    private String author;               // 작성자 이름 2
+    private String subject;              // 글 제목 3
+    private String content;              // 글 컨텐츠 4
+    private Date writeDate;              // 작성 날짜 5
+    private Time writeTime;              // 작성 시간 6
+    private int readCount;               // 조회수 7
+    private int commentCount;            // 댓글 갯수 8
+    private String password;             // 수정 삭제를 위한 패스워드 9
     
     private int replyRootId;                   // 원래 글 번호 (답글일 경우)
     private int depth;                   // (답글일경우) 제목의 'RE: ' 갯수
