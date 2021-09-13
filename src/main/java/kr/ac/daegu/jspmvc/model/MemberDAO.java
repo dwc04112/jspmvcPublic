@@ -25,39 +25,49 @@ public class MemberDAO {
         return memberDTO;
     }
 
-    public int getMemberNewMid()  throws ClassNotFoundException, SQLException {
-        // Connection, PreparedStatement, ResultSet은 interface 객체이다.
+    public void postLoginData(int newId,
+                              String id,
+                              String encodedPassword,
+                              String salt) throws SQLException, ClassNotFoundException {
+        Connection conn = DBConnection.getConnection();
+        PreparedStatement pstmt = null;
+
+        pstmt = conn.prepareStatement("insert into member values (?, ?, ?, ?)");
+        pstmt.setInt(1, newId);
+        pstmt.setString(2, id);
+        pstmt.setString(3, encodedPassword);
+        pstmt.setString(4, salt);
+        pstmt.executeUpdate();
+    }
+
+    public int existCount(String id) throws SQLException, ClassNotFoundException {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        // newId를 가져오는 쿼리
-        pstmt = conn.prepareStatement("select max(mId) + 1 AS newMid from Member");
+        pstmt = conn.prepareStatement("select count(*) from member where id = ?");
+        pstmt.setString(1, id);
         rs = pstmt.executeQuery();
 
-        int newMid = 0;
+        int count = 0;
         if(rs.next()){
-            newMid = rs.getInt("newMid");
-            return newMid;
+            count = rs.getInt(1);
         }
-
-        // 예외 발생
-        throw new SQLException("글 컨텐츠를 새로 입력하기 위한 아이디값 받아오기를 실패하였습니다.");
+        return count;
     }
 
-    public void insertJoinMember(int newMid, String id, String password, String salt)  throws ClassNotFoundException, SQLException {
-        // Connection, PreparedStatement, ResultSet은 interface 객체이다.
+    public int getNewId() throws SQLException, ClassNotFoundException {
         Connection conn = DBConnection.getConnection();
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-        // 쿼리 준비 & db 쿼리
+        pstmt = conn.prepareStatement("select max(mId) as maxId from member");
+        rs = pstmt.executeQuery();
 
-        pstmt = conn.prepareStatement("insert into member values (?,?,?,?)");
-        pstmt.setInt(1, newMid);
-        pstmt.setString(2, id);
-        pstmt.setString(3, password);
-        pstmt.setString(4, salt);
-        pstmt.executeUpdate();
+        if(rs.next()){
+            int maxId = rs.getInt("maxId");
+            return maxId + 1;
+        }
+        return 0;
     }
 }
-

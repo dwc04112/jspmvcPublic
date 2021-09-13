@@ -9,10 +9,10 @@
             var pw = document.getElementById("password").value;
             var pwCheck = document.getElementById("passwordCheck").value;
 
-            if(pwCheck == ""){
+            if(pwCheck === ""){     // ==과 ===차이 기준 : 타입의 값과 타입까지 비교하냐?
                     document.getElementById('pwsame').innerHTML = "비밀번호 확인을 입력해주세요."
             }else {
-                if (pw != pwCheck) {
+                if (pw !== pwCheck) {
                     //alert('비밀번호가 틀렸습니다. 다시 입력해주세요');
                     document.getElementById('pwsame').innerHTML = "비밀번호가 일치하지 않습니다."
                     return false;
@@ -24,11 +24,9 @@
         function tocheckpw2(){
             var pw = document.getElementById("password").value;
             var pwCheck = document.getElementById("passwordCheck").value;
-            if (pw != pwCheck) {
+            if (pw !== pwCheck) {
                 alert('비밀번호가 틀렸습니다. 다시 입력해주세요');
                 return false;
-            }else if(pw == pwCheck){
-                alert('회원가입 완료!')
             }
         }
 
