@@ -203,8 +203,7 @@ public class BoardDAO {
     }
 
 
-    public void insertComment(int newCommentId,
-                              int boardId,
+    public void insertComment(int boardId,
                               String commentAuthor,
                               String commentContent) throws ClassNotFoundException, SQLException {
         // db에 접속해서
@@ -212,11 +211,11 @@ public class BoardDAO {
         PreparedStatement pstmt = null;
 
         // 새로운 댓글을 insert
-        pstmt = conn.prepareStatement("insert into comment values (?, ?, ?, ?, CURDATE(), CURTIME())");
-        pstmt.setInt(1, newCommentId);
-        pstmt.setInt(2, boardId);
-        pstmt.setString(3, commentAuthor);
-        pstmt.setString(4, commentContent);
+        pstmt = conn.prepareStatement("insert into comment (id,author, content, writeDate,writeTime) values (?,?, ?,CURDATE(), CURTIME())");
+
+        pstmt.setInt(1, boardId);
+        pstmt.setString(2, commentAuthor);
+        pstmt.setString(3, commentContent);
         pstmt.executeUpdate();
     }
 

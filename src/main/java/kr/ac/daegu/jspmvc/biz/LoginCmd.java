@@ -27,12 +27,20 @@ public class LoginCmd implements BoardCmd {
         MemberDAO memDAO = new MemberDAO();
         // id 기준으로 로그인 정보를 가져옴.
         MemberDTO member = null;
+        // 0915 오류 아이디가 있는지 없는지부터 확인해야함
+        // 비밀번호가 오류나면 로그인 실패 페이지로 이동되지만 아이디를 틀리면 500error
+
         try {
             member = memDAO.getLoginData(id);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         // 비밀번호 매칭
+
+        if(member.getPassword()==null){
+            System.out.println("입력된 아이디와 일치하는 정보가 없습니다");
+            return false;
+        }
         return isPasswordMatch(password, member);
     }
 
